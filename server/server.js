@@ -6,6 +6,7 @@ const PORT = 3000;
 
 //import routers
 const apiRouter = require("./routers/apiRouter");
+const loginRouter = require("./routers/loginRouter");
 
 // Parse requests
 app.use(express.json());
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 // Go to routers for all other requests
 app.use("/api", apiRouter);
+app.use("/login", loginRouter);
 
 // default unknown route
 app.use((req, res) => res.status(404).send("ERROR: Could not find page!"));

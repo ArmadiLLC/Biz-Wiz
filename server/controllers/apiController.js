@@ -1,4 +1,4 @@
-import sqlActions from "../sqlActions/sqlActions";
+const sqlActions = require( "../sqlActions/sqlActions");
 
 const apiController = {};
 
