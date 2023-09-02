@@ -73,16 +73,23 @@ sqlActions.getEmployees = async () => {
 };
 sqlActions.searchEmployees = async query => {
   try {
-    const query = `SELECT * FROM employees WHERE `;
+    const dbquery = `SELECT * FROM employees WHERE `;
     const values = [];
-    if (query.bossid !== undefined) {
-      query += `bossid = $1`;
+    if (query.bossid !== undefined && query.employeeid !== undefined) {
+      dbquery += 'bossid = $1 AND id = $2';
       values.push(query.bossid);
-    } else {
-      query += `id = $1`;
       values.push(query.employeeid);
+    } else {
+      if (query.bossid !== undefined) {
+        dbquery += `bossid = $1`;
+        values.push(query.bossid);
+      }
+      if (query.employeeid !== undefined) {
+        dbquery += `id = $1`;
+        values.push(query.employeeid);
+      }
     }
-    const result = await pool.query(query, values);
+    const result = await pool.query(dbquery, values);
     return result.rows;
   } catch (error) {
     console.log(error.detial);
