@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const PG_URL = process.env.DATABASE_URL;
+console.log(PG_URL);
 const pool = new Pool({
   connectionString: PG_URL,
 });
@@ -10,27 +11,30 @@ sqlActions = {};
 
 sqlActions.createTables = async () => {
   try {
+    console.log('created tables');
     await pool.query(`CREATE TABLE IF NOT EXISTS employees
         (id SERIAL PRIMARY KEY NOT NULL,
-            firstname VARCHAR(50) NOT NULL
-            lastname VARCHAR(50) NOT NULL
-            jobtitle VARCHAR(50) NOT NULL
-            datehired TIMESTAMP
-            email VARCHAR(50))
-            bossid INTEGER
-            shortbio VARCHAR(300)
-            salary INTEGER`);
+            firstname VARCHAR(50) NOT NULL,
+            lastname VARCHAR(50) NOT NULL,
+            jobtitle VARCHAR(50) NOT NULL,
+            datehired TIMESTAMP,
+            email VARCHAR(50),
+            bossid INTEGER,
+            shortbio VARCHAR(300),
+            salary INTEGER)`);
 
-    pool.query(`CREATE TABLE IF NOT EXISTS users
+    await pool.query(`CREATE TABLE IF NOT EXISTS users
         (id SERIAL PRIMARY KEY NOT NULL,
             username VARCHAR(250) UNIQUE NOT NULL,
             password VARCHAR(250) NOT NULL)`);
 
-    pool.query(`CREATE TABLE IF NOT EXISTS sessions
-        (id SERIAL PRIMARY KEY NOT NULL
-            cookieval VARCHAR(250) NOT NULL
+    await pool.query(`CREATE TABLE IF NOT EXISTS sessions
+        (id SERIAL PRIMARY KEY NOT NULL,
+            cookieval VARCHAR(250) NOT NULL,
             userid INTEGER NOT NULL DEFAULT -1)`);
+    console.log('created tables');
   } catch (error) {
+    console.log(error);
     console.log(error.detail);
   }
 };
