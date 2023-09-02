@@ -22,15 +22,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        include: /node_modules[\\/]@?reactflow/,
-        // exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          },
-        },
+        test: /\.(js|jsx)/,
+        // include: /node_modules[\\/]@?reactflow/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
       },
       {
         test: /\.(css|scss)$/,

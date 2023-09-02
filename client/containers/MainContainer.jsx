@@ -5,10 +5,11 @@ import Chart from '../components/Chart.jsx';
 function MainContainer() {
   return (
     <div>
-      <Chart/>
+      <h1> Hello MainContainer! </h1>
+      <Chart />
       {/* other components */}
     </div>
   );
-}; 
+}
 
 export default MainContainer;

@@ -62,8 +62,8 @@ const Chart = () => {
 export default Chart; */
 
 import ReactFlow, { Controls, Background } from 'reactflow';
-import 'reactflow/dist/base.css';
-import 'reactflow/dist/style.css';
+// import 'reactflow/dist/base.css';
+// import 'reactflow/dist/style.css';
 
 const nodes = [
   {
@@ -75,6 +75,7 @@ const nodes = [
 function Flow() {
   return (
     <div style={{ height: '100%' }}>
+      hello
       <ReactFlow nodes={nodes}>
         <Background />
         <Controls />
