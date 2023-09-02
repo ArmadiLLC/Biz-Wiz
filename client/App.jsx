@@ -5,9 +5,10 @@ import MainContainer from './containers/MainContainer.jsx';
 function App() {
   return (
     <div>
-      <MainContainer/>
+      <h1> Hello App! </h1>
+      <MainContainer />
     </div>
   );
-};
+}
 
 export default App;

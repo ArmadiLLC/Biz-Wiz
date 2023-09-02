@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Chart from '../components/Chart.jsx';
+import Flow from '../components/Chart.jsx';
 
 function MainContainer() {
   return (
     <div>
-      <Chart/>
-      {/* other components */}
+      <h1> Hello MainContainer! </h1>
+      <Flow />;{/* other components */}
     </div>
   );
-}; 
-
+}
 export default MainContainer;

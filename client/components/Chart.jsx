@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+/* import React, { useCallback } from 'react';
 import ReactFlow, {
   addEdge,
   MiniMap,
@@ -7,10 +7,10 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
 } from 'reactflow';
-import { nodes as initialNodes, edges as initialEdges } from './initial-elements';
-import CustomNode from './CustomNode';
-import 'reactflow/dist/style.css';
-import './overview.css';
+// //import { nodes as initialNodes, edges as initialEdges } from './initial-elements';
+// //import CustomNode from './CustomNode';
+//import 'reactflow/dist/style.css';
+//import './overview.css';
 
 //example from react flow website.. has not been modified yet.
 
@@ -59,4 +59,25 @@ const Chart = () => {
   );
 };
 
-export default Chart;
+export default Chart; */
+import React, { useCallback } from 'react';
+import ReactFlow, { Controls, Background } from 'reactflow';
+const nodes = [
+  {
+    id: '1',
+    position: { x: 0, y: 0 },
+  },
+];
+
+function Flow() {
+  return (
+    <div style={{ height: '100%' }}>
+      <ReactFlow nodes={nodes}>
+        <Background />
+        <Controls />
+      </ReactFlow>
+    </div>
+  );
+}
+
+export default Flow;
