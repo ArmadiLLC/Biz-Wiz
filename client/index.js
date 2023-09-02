@@ -3,10 +3,10 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './App';
 import store from './store';
-// import 'reactflow/dist/base.css';
-// import 'reactflow/dist/style.css';
+import { ReactFlow } from 'reactflow';
 const root = createRoot(document.getElementById('root'));
-
+import './reactflowbase.css';
+import './reactflowstyle.css';
 root.render(
   <Provider store={store}>
     hello

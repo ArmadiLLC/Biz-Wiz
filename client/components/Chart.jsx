@@ -62,9 +62,6 @@ const Chart = () => {
 export default Chart; */
 import React, { useCallback } from 'react';
 import ReactFlow, { Controls, Background } from 'reactflow';
-//import 'reactflow/dist/base.css';
-//import 'reactflow/dist/style.css';
-
 const nodes = [
   {
     id: '1',
