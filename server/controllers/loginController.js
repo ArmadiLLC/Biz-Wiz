@@ -1,5 +1,4 @@
 const sqlActions = require("../sqlActions/sqlActions");
-const bcrypt = require("bcrypt");
 
 const loginController = {};
 
