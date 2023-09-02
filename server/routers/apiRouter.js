@@ -12,6 +12,7 @@ router.get('/query', apiController.getEmployee, (req, res) => {
   return res.status(200).json(res.locals.employee);
 });
 router.post('/', apiController.addNewEmployee, (req, res) => {
+  console.log(res.locals.newEmployee);
   return res.status(200).json(res.locals.newEmployee);
 });
 router.patch('/:id', apiController.updateEmployee, (req, res) => {

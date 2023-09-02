@@ -2,10 +2,10 @@ const sqlActions = require('../sqlActions/sqlActions');
 
 const apiController = {};
 
-apiController.getAllEmployees = (req, res, next) => {
+apiController.getAllEmployees = async (req, res, next) => {
   // not sure what the sql for getting all employees or if we need all employee data;
   try {
-    res.locals.employees = sqlActions.getEmployees();
+    res.locals.employees = await sqlActions.getEmployees();
     next();
   } catch {
     next({
@@ -18,10 +18,12 @@ apiController.getAllEmployees = (req, res, next) => {
   }
 };
 
-apiController.getEmployee = (req, res, next) => {
+apiController.getEmployee = async (req, res, next) => {
   const { id, bossid } = req.query;
+  console.log(req.query);
+  console.log(id);
   try {
-    res.locals.employee = sqlActions.searchEmployees({
+    res.locals.employee = await sqlActions.searchEmployees({
       bossid: bossid,
       employeeid: id,
     });
@@ -37,9 +39,9 @@ apiController.getEmployee = (req, res, next) => {
   }
 };
 
-apiController.addNewEmployee = (req, res, next) => {
+apiController.addNewEmployee = async (req, res, next) => {
   try {
-    res.locals.employee = sqlActions.createEmployee(req.body);
+    res.locals.newEmployee = await sqlActions.createEmployee(req.body);
     next();
   } catch {
     next({
@@ -67,10 +69,10 @@ apiController.updateEmployee = (req, res, next) => {
   }
 };
 
-apiController.deleteEmployee = (req, res, next) => {
+apiController.deleteEmployee = async (req, res, next) => {
   const id = req.params.id;
   try {
-    res.locals.employee = sqlActions.deleteEmployee(id);
+    res.locals.employee = await sqlActions.deleteEmployee(id);
     next();
   } catch {
     next({
