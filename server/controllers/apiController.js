@@ -19,9 +19,12 @@ apiController.getAllEmployees = (req, res, next) => {
 };
 
 apiController.getEmployee = (req, res, next) => {
-  const id = req.params.id;
+  const { id, bossid } = req.query;
   try {
-    res.locals.employee = sqlActions.searchEmployees(id);
+    res.locals.employee = sqlActions.searchEmployees({
+      bossid: bossid,
+      employeeid: id,
+    });
     next();
   } catch {
     next({
