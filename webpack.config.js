@@ -22,8 +22,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.(js|jsx)$/,
-        exclude: /node_modules/,
+        test: /\.(js|jsx)$/,
+        include: /node_modules[\\/]@?reactflow/,
+        // exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -32,9 +33,9 @@ module.exports = {
         },
       },
       {
-        test: /.(css|scss)$/,
+        test: /\.(css|scss)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
