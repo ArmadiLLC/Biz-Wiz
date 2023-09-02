@@ -63,6 +63,49 @@ sqlActions.createEmployee = async data => {
     console.log(error.detail);
   }
 };
+sqlActions.updateEmployee = async data => {
+  try {
+    const {
+      employeeid,
+      firstname,
+      lastname,
+      jobtitle,
+      datehired,
+      email,
+      shortbio,
+      salary,
+    } = data;
+    let updateEmployee = [
+      firstname,
+      lastname,
+      jobtitle,
+      datehired,
+      email,
+      shortbio,
+      salary,
+    ];
+    const values = [employeeid];
+    updateEmployee = Object.keys(updateEmployee)
+      .filter(key => updateEmployee[key] !== undefined)
+      .reduce(
+        (cur, key) => Object.assign(cur, { [key]: updateEmployee[key] }),
+        {},
+      );
+    for (const [key, value] of Object.entries(updateLift)) {
+      if (!first) {
+        query += `,`;
+      }
+      first = false;
+      query += ` ${key} = $${values.length + 1}`;
+      values.push(value);
+    }
+    query += ` where id = $1 RETURNING id, firstname, lastname, jobtitle, datehired, email, bossid, shortbio, salary`;
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    console.log(error.detail);
+  }
+};
 sqlActions.getEmployees = async () => {
   try {
     const result = await pool.query('SELECT * FROM employees');
