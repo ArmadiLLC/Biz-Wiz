@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/', apiController.getAllEmployees, (req, res) => {
   return res.status(200).json(res.locals.employees);
 });
-router.get('/:id', apiController.getEmployee, (req, res) => {
+router.get('/query', apiController.getEmployee, (req, res) => {
+  //example: /api/query?id=4&bossid=3
   return res.status(200).json(res.locals.employee);
 });
 router.post('/', apiController.addNewEmployee, (req, res) => {

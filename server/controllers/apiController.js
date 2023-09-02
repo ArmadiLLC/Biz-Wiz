@@ -19,8 +19,7 @@ apiController.getAllEmployees = (req, res, next) => {
 };
 
 apiController.getEmployee = (req, res, next) => {
-  const id = req.params.id;
-  const bossid = req.params.bossid;
+  const { id, bossid } = req.query;
   try {
     res.locals.employee = sqlActions.searchEmployees({
       bossid: bossid,
