@@ -13,6 +13,7 @@ app.use(express.json());
 // Handle static assests - not sure where exactly we are requesting static files at this point
 // defaulting - /assets
 app.use("/assets", express.static("client/assets"));
+app.get('/dist', express.static('../dist'));
 
 // homepage:
 app.get("/", (req, res) => {
