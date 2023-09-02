@@ -50,7 +50,7 @@ sqlActions.createEmployee = async(data) =>{
         console.log(error.detail);
     }
 }
-sqlAction.searchEmployees = asyc(query) =>{
+sqlActions.searchEmployees = asyc(query) =>{
     try{
         const query = `SELECT * FROM employees WHERE `;
         const values = [];
@@ -63,5 +63,8 @@ sqlAction.searchEmployees = asyc(query) =>{
         }
         const result = await pool.query(query, values);
         return result.rows[0];
-    }catch(error){}
+    }catch(error){
+        console.log(error.detial);
+    }
 }
+module.exports = sqlActions;
