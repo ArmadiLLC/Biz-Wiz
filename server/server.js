@@ -15,6 +15,10 @@ app.use(express.json());
 app.use("/assets", express.static("client/assets"));
 app.get('/dist', express.static('../dist'));
 
+// create routes for basic CRUD for getting/updating DATA
+// create route for logging in
+
+
 // homepage:
 app.get("/", (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, "/index.html"));
