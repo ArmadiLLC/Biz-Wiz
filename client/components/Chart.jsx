@@ -40,8 +40,14 @@ const initialNodes = [
 
 initialNodes.push(
   {
-    id: '1', //Must be string
+    id: '4', //Must be string
     data: { label: 'firstChild' },
+    position: { x: 0, y: 0 },
+    type: 'input',
+  },
+  {
+    id: '5', //Must be string
+    data: { label: 'secondChild' },
     position: { x: 0, y: 0 },
     type: 'input',
   }
