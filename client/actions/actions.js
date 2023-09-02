@@ -6,7 +6,7 @@ export const openDrawerActionCreator = currentView => ({
     payload: currentView
 })*/
 
-export const addEmployeeActionCreator = inputData => ({ // inputData = {firstName: , lastName: , jobTitle: , email: , bossID: , shortBio: , salary: }
+export const addEmployeeActionCreator = inputData => ({ // inputData = {firstName: , lastName: , jobTitle: , dateHired: , email: , bossID: , shortBio: , salary: }
     type: types.ADD_EMPLOYEE,
     payload: inputData
 })

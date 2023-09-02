@@ -1,83 +1,112 @@
-/* import React, { useCallback } from 'react';
+import Dagre from '@dagrejs/dagre';
+import React, { useCallback } from 'react';
 import ReactFlow, {
-  addEdge,
-  MiniMap,
-  Controls,
-  Background,
+  ReactFlowProvider,
+  Panel,
   useNodesState,
   useEdgesState,
+  useReactFlow,
 } from 'reactflow';
-// //import { nodes as initialNodes, edges as initialEdges } from './initial-elements';
-// //import CustomNode from './CustomNode';
-//import 'reactflow/dist/style.css';
-//import './overview.css';
+const initialEdges = [{ id: 0, source: '1', target: '2' }, { id: 1, source: '1', target: '3' }];
 
-//example from react flow website.. has not been modified yet.
+const populateFlow = () => {
 
-const nodeTypes = {
-  custom: CustomNode,
+  // if no employee under current: end recursive call
+
+  // 
+
+}
+
+const initialNodes = [
+  {
+    id: '1', //Must be string
+    data: { label: 'Hello' },
+    position: { x: 0, y: 0 },
+    type: 'input',
+  },
+  {
+    id: '2',
+    data: { label: 'World' },
+    position: { x: 100, y: 100 },
+  },
+  {
+    id: '3',
+    data: { label: 'to You' },
+    position: { x: -100, y: 100 },
+  },
+];
+
+
+
+initialNodes.push(
+  {
+    id: '1', //Must be string
+    data: { label: 'firstChild' },
+    position: { x: 0, y: 0 },
+    type: 'input',
+  }
+)
+
+const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+
+const getLayoutedElements = (nodes, edges, options) => {
+  g.setGraph({ rankdir: options.direction });
+
+  edges.forEach((edge) => g.setEdge(edge.source, edge.target));
+  nodes.forEach((node) => g.setNode(node.id, node));
+
+  Dagre.layout(g);
+
+  return {
+    nodes: nodes.map((node) => {
+      const { x, y } = g.node(node.id);
+
+      return { ...node, position: { x, y } };
+    }),
+    edges,
+  };
 };
 
-const minimapStyle = {
-  height: 120,
-};
-
-const onInit = (reactFlowInstance) => console.log('flow loaded:', reactFlowInstance);
-
-const Chart = () => {
+const LayoutFlow = () => {
+  const { fitView } = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
-  // we are using a bit of a shortcut here to adjust the edge type
-  // this could also be done with a custom edge for example
-  const edgesWithUpdatedTypes = edges.map((edge) => {
-    if (edge.sourceHandle) {
-      const edgeType = nodes.find((node) => node.type === 'custom').data.selects[edge.sourceHandle];
-      edge.type = edgeType;
-    }
+  const onLayout = useCallback(
+    (direction) => {
+      const layouted = getLayoutedElements(nodes, edges, { direction });
 
-    return edge;
-  });
+      setNodes([...layouted.nodes]);
+      setEdges([...layouted.edges]);
+
+      window.requestAnimationFrame(() => {
+        fitView();
+      });
+    },
+    [nodes, edges]
+  );
 
   return (
     <ReactFlow
       nodes={nodes}
-      edges={edgesWithUpdatedTypes}
+      edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      onInit={onInit}
       fitView
-      attributionPosition="top-right"
-      nodeTypes={nodeTypes}
     >
-      <MiniMap style={minimapStyle} zoomable pannable />
-      <Controls />
-      <Background color="#aaa" gap={16} />
+      <Panel position="top-right">
+        <button onClick={() => onLayout('TB')}>vertical layout</button>
+        <button onClick={() => onLayout('LR')}>horizontal layout</button>
+      </Panel>
     </ReactFlow>
   );
 };
 
-export default Chart; */
-import React, { useCallback } from 'react';
-import ReactFlow, { Controls, Background } from 'reactflow';
-const nodes = [
-  {
-    id: '1',
-    position: { x: 0, y: 0 },
-  },
-];
-
-function Flow() {
+export default function () {
   return (
-    <div style={{ height: '100%' }}>
-      <ReactFlow nodes={nodes}>
-        <Background />
-        <Controls />
-      </ReactFlow>
-    </div>
+    <ReactFlowProvider>
+      <LayoutFlow />
+    </ReactFlowProvider>
   );
 }
 
-export default Flow;

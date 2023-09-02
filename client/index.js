@@ -7,6 +7,8 @@ import { ReactFlow } from 'reactflow';
 const root = createRoot(document.getElementById('root'));
 import './reactflowbase.css';
 import './reactflowstyle.css';
+import './app.css';
+
 root.render(
   <Provider store={store}>
     hello
