@@ -71,7 +71,7 @@ sqlActions.searchEmployees = async query => {
       values.push(query.employeeid);
     }
     const result = await pool.query(query, values);
-    return result.rows[0];
+    return result.rows;
   } catch (error) {
     console.log(error.detial);
   }
