@@ -3,7 +3,8 @@ const express = require('express');
 const app = express();
 // Optional Port for listening call
 const PORT = 3000;
-
+const sqlActions = require('./sqlActions/sqlActions');
+sqlActions.createTables();
 //import routers
 const apiRouter = require('./routers/apiRouter');
 
