@@ -59,6 +59,14 @@ sqlActions.createEmployee = async data => {
     console.log(error.detail);
   }
 };
+sqlActions.getEmployees = async () => {
+  try {
+    const result = await pool.query('SELECT * FROM employees');
+    return result.rows;
+  } catch (error) {
+    console.log(error.detail);
+  }
+};
 sqlActions.searchEmployees = async query => {
   try {
     const query = `SELECT * FROM employees WHERE `;
