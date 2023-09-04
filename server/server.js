@@ -23,7 +23,7 @@ app.get('/dist', express.static('../dist'));
 
 // homepage:
 app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '/index.html'));
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 // Go to routers for all other requests
 
