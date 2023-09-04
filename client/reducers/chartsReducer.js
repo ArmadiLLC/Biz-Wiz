@@ -1,22 +1,24 @@
 import * as types from '../constants/actionTypes';
 
 const initialState = {
+  connections: [],
+  employees: []
     
 };
   
-  const chartsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case types.ADD_EMPLOYEE:
+const chartsReducer = (state = initialState, action) => {
+  switch (action.type) {
+      case types.ADD_EMPLOYEE:
+        return state;
+      case types.FIND_EMPLOYEE:
+        return state;
+      case types.UPDATE_EMPLOYEE:
+        return state;
+      case types.DELETE_EMPLOYEE:
+        return state;
+      default:
           return state;
-        case types.FIND_EMPLOYEE:
-          return state;
-        case types.UPDATE_EMPLOYEE:
-          return state;
-        case types.DELETE_EMPLOYEE:
-          return state;
-        default:
-            return state;
-    }
-  };
-  
-  export default chartsReducer;
+  }
+};
+
+export default chartsReducer;

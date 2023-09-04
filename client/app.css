@@ -1,0 +1,9 @@
+.outerBox {
+    max-width: 1500px;
+    max-height: 1500px;
+    margin: 0 auto;
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid #ffc0a7;
+    background-color: #ffecdd;
+  }
