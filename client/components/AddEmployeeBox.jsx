@@ -19,7 +19,7 @@ const AddEmployeeBox = (props) => {
   const [bossid, setbossid] = useState();
   const [email, setEmail] = useState("");
   const [shortbio, setShortBio] = useState("");
-  const [salary, setSalary] = useState("");
+  const [salary, setSalary] = useState(0);
   const [dateHired, setDateHired] = useState();
   const [employeesAndID, setemployeesAndID] = useState([]);
   const editposition = props.pos;
@@ -78,7 +78,7 @@ const AddEmployeeBox = (props) => {
     onFirstNameChangeHandle,
   };
   const submitEmployee = async () => {
-    const newEmployee = {
+    const tempNewEmployee = {
       firstname: firstname,
       lastname: lastname,
       jobtitle: jobtitle,
@@ -88,7 +88,12 @@ const AddEmployeeBox = (props) => {
       shortbio: shortbio,
       bossid: bossid,
     };
-
+    const newEmployee = {};
+    for(const[key, value] of Object.entries(tempNewEmployee)){
+        if(value !== undefined && value){
+            newEmployee[key] = value;
+        }
+    }
     await fetch("/api", {
       method: "POST",
       headers: {
@@ -102,6 +107,7 @@ const AddEmployeeBox = (props) => {
     setEmail('');
     setSalary('');
     setShortBio('');
+    populateDropDown();
   };
   const options = [];
   for (let i = 0; i < employeesAndID.length; i++) {

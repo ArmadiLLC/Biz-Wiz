@@ -43,7 +43,8 @@ apiController.addNewEmployee = async (req, res, next) => {
   try {
     res.locals.newEmployee = await sqlActions.createEmployee(req.body);
     next();
-  } catch {
+  } catch(error)
+ { console.log(error);
     next({
       log: 'Error at apiController.addNewEmployee',
       status: 400,
