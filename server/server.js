@@ -1,4 +1,4 @@
-const patch = require('path');
+const path = require('path');
 const express = require('express');
 const app = express();
 // Optional Port for listening call
@@ -6,7 +6,9 @@ const PORT = 3000;
 const sqlActions = require('./sqlActions/sqlActions');
 sqlActions.createTables();
 //import routers
-const apiRouter = require('./routers/apiRouter');
+const apiRouter = require("./routers/apiRouter");
+const loginRouter = require("./routers/loginRouter");
+
 
 // Parse requests
 app.use(express.json());
@@ -24,7 +26,10 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '/index.html'));
 });
 // Go to routers for all other requests
-app.use('/api', apiRouter);
+
+app.use("/api", apiRouter);
+app.use("/login", loginRouter);
+
 
 // default unknown route
 app.use((req, res) => res.status(404).send('ERROR: Could not find page!'));
