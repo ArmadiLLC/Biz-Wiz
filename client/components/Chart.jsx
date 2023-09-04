@@ -38,7 +38,6 @@ const LayoutFlow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const fetchEmployees = async () => {
-    setEdges([]);
     try {
       // get data
       const response = await fetch('/api');
@@ -51,9 +50,8 @@ const LayoutFlow = () => {
         position: { x: 0, y: 0 }, // change this logic later after verfiying the data has been retrieved
       }));
 
-      let i = 0;
-      const formattedEdges = data.map(employee => ({
-        id: `edge-${i++}`,
+      const formattedEdges = data.map((employee) => ({
+        id: `edge-${Number(employee.id)*Math.random()*100}`,
         source: employee.bossid ? employee.bossid.toString() : null,
         target: employee.id.toString(),
       }));

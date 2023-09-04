@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Flow from '../components/Chart.jsx';
-import { useDispatch } from 'react-redux';
+import AddEmployeeBox from '../components/AddEmployeeBox.jsx';
+// import { useDispatch } from 'react-redux';
+
+
 
 function MainContainer() {
+  // const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+  //   const addEmployee = () => {
+  //     dispatch(addEmployeeActionCreator())
+  //   }
 
-    const addEmployee = () => {
-      dispatch(addEmployeeActionCreator())
-    }
-
-    const deleteEmployee = () => {
-      dispatch(deleteEmployeeActionCreator())
-    }
-
+  //   const deleteEmployee = () => {
+  //     dispatch(deleteEmployeeActionCreator())
+  //   }
+  const [addemployeehidden, setaddemployeehidden] = useState(true);
+  const showAddEmployee = () => {
+    setaddemployeehidden(!addemployeehidden);
+  }
   return (
     <div className="outerBox">
-      <button onClick = {() => {addEmployee()}}>Add Employee</button>
-      <button onClick = {() => {deleteEmployee()}}>Delete Employee</button>
+      <button onClick = {() => {showAddEmployee()}}>Add Employee</button>
+      <AddEmployeeBox hidden = {addemployeehidden}/>      
+      {/* <button onClick = {() => {deleteEmployee()}}>Delete Employee</button> */}
       <Flow/>;{/* other components */}
     </div>
   );
