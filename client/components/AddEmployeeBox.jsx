@@ -68,14 +68,16 @@ const AddEmployeeBox = (props) => {
 
   const hidden = props.hidden;
   const style = {
-    top: `${100}px`,
-    left: `${100}px`,
+    top: props.pos[0]+window.scrollY,
+    left: props.pos[1],
     display: hidden ? "none" : "flex",
     flexDirection: "column",
     alignSelf: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     zIndex: 2,
-    onFirstNameChangeHandle,
+    backgroundColor: 'white',
+    position: 'absolute',
+    padding: '5px'
   };
   const submitEmployee = async () => {
     const tempNewEmployee = {
@@ -124,46 +126,56 @@ const AddEmployeeBox = (props) => {
   return (
     <div style={style}>
       <form>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>First Name:</label>
         <input
           type="text"
           onChange={onFirstNameChangeHandle}
           value={firstname}
         ></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Last Name:</label>
         <input
           type="text"
           onChange={onLastNameChangeHandle}
           value={lastname}
         ></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Job Title:</label>
         <input
           type="text"
           onChange={onJobTitleChangeHandle}
           value={jobtitle}
         ></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Date Hired:</label>
         <input type="date" onChange={onDateHiredChangeHandle}></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Email:</label>
         <input type="text" onChange={onEmailChangeHandle}></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Boss: </label>
         <select id="bossSelector" onChange={onBossIdChangeHandle}>
           <option value={null}>Select an Employee</option>
           {options}
         </select>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Short Bio:</label>
         <input type="text" onChange={onShortBioChangeHandle}></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'space-between'}}>
         <label>Salary:</label>
         <input type="text" onChange={onSalaryChangeHandle}></input>
-        <br></br>
+        </div>
+        <div style = {{display:'flex', justifyContent:'flex-end'}}>
         <button onClick={submitEmployee}>Submit employee</button>
+        </div>
       </form>
     </div>
   );

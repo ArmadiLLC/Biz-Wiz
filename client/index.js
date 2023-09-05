@@ -11,7 +11,6 @@ import './app.css';
 
 root.render(
   <Provider store={store}>
-    hello
     <App />
   </Provider>,
 );

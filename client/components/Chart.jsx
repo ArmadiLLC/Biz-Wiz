@@ -45,6 +45,7 @@ const LayoutFlow = (props) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [moreEmployeeInfohidden, setMoreEmployeeInfoHidden] = useState(true);
+  const [ moreEmployeeInfoPos, setMoreEmployeeInfoPos] = useState([0,0]);
   const [employeeData, setEmployeeData] = useState(
     {
       "id": 1,
@@ -118,6 +119,8 @@ const LayoutFlow = (props) => {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onNodeClick={async (e, node) => {
+        const pos = e.target.getBoundingClientRect();
+        setMoreEmployeeInfoPos([pos.bottom, pos.left]);
         setEmployeeData(await fetchEmployeeData(+node.id));
         setMoreEmployeeInfoHidden(!moreEmployeeInfohidden)}
       }
@@ -129,7 +132,7 @@ const LayoutFlow = (props) => {
       </Panel>
 
     </ReactFlow>
-          <EmployeeInfoBox hidden = {moreEmployeeInfohidden} data={employeeData} deleteNode = {deleteNodeById}/>
+          <EmployeeInfoBox hidden = {moreEmployeeInfohidden} data={employeeData} deleteNode = {deleteNodeById} pos = {moreEmployeeInfoPos}/>
           </div>
   );
 };
