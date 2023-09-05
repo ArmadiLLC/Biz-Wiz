@@ -57,8 +57,10 @@ apiController.addNewEmployee = async (req, res, next) => {
 
 apiController.updateEmployee = (req, res, next) => {
   const id = req.params.id;
+  const newEmployee = req.body;
   try {
-    res.locals.employee = next(); //sql update employee function
+    res.locals.employee = sqlActions.updateEmployee(id, newEmployee); //sql update employee function
+    return next();
   } catch {
     next({
       log: 'Error at apiController.updateEmployee',

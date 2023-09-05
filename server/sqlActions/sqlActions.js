@@ -62,18 +62,18 @@ sqlActions.createEmployee = async data => {
   const result = await pool.query(query, values);
   return result.rows[0];
 };
-sqlActions.updateEmployee = async data => {
+sqlActions.updateEmployee = async (id, data) => {
   const {
-    employeeid,
     firstname,
     lastname,
     jobtitle,
     datehired,
     email,
+    bossid,
     shortbio,
     salary,
   } = data;
-  let updateEmployee = [
+  let updateEmployee = {
     firstname,
     lastname,
     jobtitle,
@@ -81,15 +81,19 @@ sqlActions.updateEmployee = async data => {
     email,
     shortbio,
     salary,
-  ];
-  const values = [employeeid];
+    bossid,
+  };
+  const values = [id];
+  let query = 'UPDATE employees SET';
   updateEmployee = Object.keys(updateEmployee)
     .filter(key => updateEmployee[key] !== undefined)
     .reduce(
       (cur, key) => Object.assign(cur, { [key]: updateEmployee[key] }),
       {},
     );
-  for (const [key, value] of Object.entries(updateLift)) {
+  console.log(updateEmployee);
+  let first = true;
+  for (const [key, value] of Object.entries(updateEmployee)) {
     if (!first) {
       query += `,`;
     }
@@ -97,7 +101,8 @@ sqlActions.updateEmployee = async data => {
     query += ` ${key} = $${values.length + 1}`;
     values.push(value);
   }
-  query += ` where id = $1 RETURNING id, firstname, lastname, jobtitle, datehired, email, bossid, shortbio, salary`;
+  query += ` WHERE id = $1 RETURNING id, firstname, lastname, jobtitle, datehired, email, bossid, shortbio, salary`;
+  console.log(query);
   const result = await pool.query(query, values);
   return result.rows[0];
 };
