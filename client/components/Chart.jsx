@@ -40,6 +40,25 @@ const LayoutFlow = (props) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [moreEmployeeInfohidden, setMoreEmployeeInfoHidden] = useState(true);
+  const [employeeData, setEmployeeData] = useState(
+    {
+      "id": 1,
+      "firstname": "Jacob",
+      "lastname": "Sasser",
+      "jobtitle": "server master",
+      "datehired": null,
+      "email": null,
+      "bossid": null,
+      "shortbio": null,
+      "salary": null
+  }
+  );
+  const deleteNodeById = (id) => {
+    console.log(nodes);
+    setNodes(nodes => nodes.filter(node=> node.id !== id));
+    console.log(nodes.filter(node=>{console.log(node.id, id); return node.id !== id;}));
+    console.log('after delete:',nodes);
+  }
   const fetchEmployees = async () => {
     try {
       // get data
@@ -59,8 +78,8 @@ const LayoutFlow = (props) => {
         target: employee.id.toString(),
       }));
       // set chart components state
-      setNodes([...nodes, ...formattedNodes]);
-      setEdges([...edges, ...formattedEdges]);
+      setNodes([...formattedNodes]);
+      setEdges([...formattedEdges]);
 
       //properly size the page
       fitView();
@@ -68,10 +87,11 @@ const LayoutFlow = (props) => {
       console.error('Error fetching Data: ', err);
     }
   };
-  // useEffect(() => {
-  //   fetchEmployees();
-  // }, [nodes, edges]);
-
+  const fetchEmployeeData = async (id) =>{
+    const response = await fetch('/api/query?id='+id)
+    const data = await response.json();
+    return data[0];
+  }
   const onLayout = useCallback(
     direction => {
       const layouted = getLayoutedElements(nodes, edges, { direction });
@@ -87,13 +107,14 @@ const LayoutFlow = (props) => {
   );
 
   return (
+    <div>
     <ReactFlow
       nodes={nodes}
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onNodeClick={(e) => {
-        console.log(e.target["data-id"])
+      onNodeClick={async (e, node) => {
+        setEmployeeData(await fetchEmployeeData(+node.id));
         setMoreEmployeeInfoHidden(!moreEmployeeInfohidden)}
       }
       fitView>
@@ -102,8 +123,10 @@ const LayoutFlow = (props) => {
         <button onClick={() => onLayout('TB')}>vertical layout</button>
         <button onClick={() => onLayout('LR')}>horizontal layout</button>
       </Panel>
-      <EmployeeInfoBox hidden = {moreEmployeeInfohidden}/>
+
     </ReactFlow>
+          <EmployeeInfoBox hidden = {moreEmployeeInfohidden} data={employeeData} deleteNode = {deleteNodeById}/>
+          </div>
   );
 };
 
