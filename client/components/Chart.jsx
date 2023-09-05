@@ -13,8 +13,10 @@ const initialEdges = [];
 
 // sample nodes for testing layout
 const initialNodes = [];
-const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
-
+const g = new Dagre.graphlib.Graph();
+g.setDefaultEdgeLabel(() => ({}));
+const nodeWidth = 172;
+const nodeHeight = 36;
 
 
 const getLayoutedElements = (nodes, edges, options) => {
@@ -26,10 +28,13 @@ const getLayoutedElements = (nodes, edges, options) => {
   Dagre.layout(g);
 
   return {
-    nodes: nodes.map(node => {
+    nodes: nodes.map((node) => {
       const { x, y } = g.node(node.id);
-
-      return { ...node, position: { x, y } };
+      let sourcePosition;
+      let targetPosition;
+      (options.direction === 'TB') ? sourcePosition = 'bottom' : sourcePosition = 'right';
+      (options.direction === 'TB') ? targetPosition = 'top' : targetPosition = 'left';
+      return { ...node, position: { x, y }, 'sourcePosition': sourcePosition, 'targetPosition': targetPosition };
     }),
     edges,
   };
@@ -54,10 +59,7 @@ const LayoutFlow = (props) => {
   }
   );
   const deleteNodeById = (id) => {
-    console.log(nodes);
-    setNodes(nodes => nodes.filter(node=> node.id !== id));
-    console.log(nodes.filter(node=>{console.log(node.id, id); return node.id !== id;}));
-    console.log('after delete:',nodes);
+    setNodes(nodes => nodes.filter(node=> +node.id !== +id));
   }
   const fetchEmployees = async () => {
     try {
@@ -71,16 +73,18 @@ const LayoutFlow = (props) => {
         data: { label: `${employee.firstname} ${employee.lastname}` },
         position: { x: 0, y: 0 }, // change this logic later after verfiying the data has been retrieved
       }));
-
+      
       const formattedEdges = data.map((employee) => ({
         id: `edge-${Number(employee.id)*Math.random()*100}`,
         source: employee.bossid ? employee.bossid.toString() : null,
         target: employee.id.toString(),
       }));
       // set chart components state
+      // const layouted = getLayoutedElements(formattedNodes, formattedEdges, {direction: 'TB'});
+      
       setNodes([...formattedNodes]);
       setEdges([...formattedEdges]);
-
+      onLayout('TB')
       //properly size the page
       fitView();
     } catch (err) {
