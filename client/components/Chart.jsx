@@ -1,5 +1,5 @@
 import Dagre from '@dagrejs/dagre';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   Panel,
@@ -7,12 +7,15 @@ import ReactFlow, {
   useEdgesState,
   useReactFlow,
 } from 'reactflow';
+import EmployeeInfoBox from './EmployeeInfoBox';
 const initialEdges = [];
+
 
 // sample nodes for testing layout
 const initialNodes = [];
-
 const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+
+
 
 const getLayoutedElements = (nodes, edges, options) => {
   g.setGraph({ rankdir: options.direction });
@@ -32,11 +35,11 @@ const getLayoutedElements = (nodes, edges, options) => {
   };
 };
 
-const LayoutFlow = () => {
+const LayoutFlow = (props) => {
   const { fitView } = useReactFlow();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
+  const [moreEmployeeInfohidden, setMoreEmployeeInfoHidden] = useState(true);
   const fetchEmployees = async () => {
     try {
       // get data
@@ -89,12 +92,17 @@ const LayoutFlow = () => {
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      onNodeClick={(e) => {
+        console.log(e.target["data-id"])
+        setMoreEmployeeInfoHidden(!moreEmployeeInfohidden)}
+      }
       fitView>
       <Panel position='top-right'>
         <button onClick={() => fetchEmployees()}>update chart</button>
         <button onClick={() => onLayout('TB')}>vertical layout</button>
         <button onClick={() => onLayout('LR')}>horizontal layout</button>
       </Panel>
+      <EmployeeInfoBox hidden = {moreEmployeeInfohidden}/>
     </ReactFlow>
   );
 };
