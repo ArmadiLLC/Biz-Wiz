@@ -40,8 +40,8 @@
 }
 .react-flow__edge-path,
 .react-flow__connection-path {
-  stroke: #b1b1b7;
-  stroke-width: 1;
+  stroke: #000000;
+  stroke-width: 2;
   fill: none;
 }
 .react-flow__edge {
