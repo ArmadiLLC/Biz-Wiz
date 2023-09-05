@@ -6,9 +6,8 @@ const PORT = 3000;
 const sqlActions = require('./sqlActions/sqlActions');
 sqlActions.createTables();
 //import routers
-const apiRouter = require("./routers/apiRouter");
-const loginRouter = require("./routers/loginRouter");
-
+const apiRouter = require('./routers/apiRouter');
+const loginRouter = require('./routers/loginRouter');
 
 // Parse requests
 app.use(express.json());
@@ -16,7 +15,7 @@ app.use(express.json());
 // Handle static assests - not sure where exactly we are requesting static files at this point
 // defaulting - /assets
 app.use('/assets', express.static('client/assets'));
-app.get('/dist', express.static('../dist'));
+app.use('/dist', express.static(path.join(__dirname, '../dist')));
 
 // create routes for basic CRUD for getting/updating DATA
 // create route for logging in
@@ -27,9 +26,8 @@ app.get('/', (req, res) => {
 });
 // Go to routers for all other requests
 
-app.use("/api", apiRouter);
-app.use("/login", loginRouter);
-
+app.use('/api', apiRouter);
+app.use('/login', loginRouter);
 
 // default unknown route
 app.use((req, res) => res.status(404).send('ERROR: Could not find page!'));
