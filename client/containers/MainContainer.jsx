@@ -18,13 +18,16 @@ function MainContainer() {
   //     dispatch(deleteEmployeeActionCreator())
   //   }
   const [addemployeehidden, setaddemployeehidden] = useState(true);
-  const showAddEmployee = () => {
+  const [addemployeepos, setaddemployeepos] = useState([0,0]);
+  const showAddEmployee = (e) => {
     setaddemployeehidden(!addemployeehidden);
+    const pos = e.target.getBoundingClientRect();
+    setaddemployeepos([pos.bottom, pos.left])
   }
   return (
     <div className="outerBox">
-      <button onClick = {() => {showAddEmployee()}}>Add Employee</button>
-      <AddEmployeeBox hidden = {addemployeehidden}/>
+      <button onClick = {showAddEmployee}>Add Employee</button>
+      <AddEmployeeBox hidden = {addemployeehidden} pos = {addemployeepos}/>
         
       {/* <button onClick = {() => {deleteEmployee()}}>Delete Employee</button> */}
       <Flow/>;{/* other components */}
